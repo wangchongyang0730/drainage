@@ -1,0 +1,95 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: Drainage
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+  profiles:
+    active: local
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    call-setters-on-nulls: true #列为空是也返回字段  map
+    return-instance-for-empty-row: true #所有都为空时返回一个空实例  map
+jwt:
+  config:
+    key: shixi
+    ttl: 5400000
+#日志打印
+logging:
+  config: classpath:loggback.xml
+init:
+  companyId: 1bc7b99a3cf444f3ba25bc918428cd93
+  tagId: 109ca37f483d4935877d31d415ea943e
+# 排水
+weixin:
+  agentId: 2
+  secret: DdbKQHl7ep5703UZJmw_eu5BOuweIBf7eJx_R78F4do
+  corpId: wx90478f2591abcc73
+# 市政
+#weixin:
+#  agentId: 1000048
+#  secret: aEqErNrrR2obXWg0w_7BbNrOfeUCIYRk-DB81nCxWxM
+#  corpId: wx280729577c4a65bd
+---
+# 测试机
+spring:
+  profiles: test
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sp?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+file:
+  download: D:/web/BIM/监测报表/
+  upload: D:/web/BIM/interface/upload/
+  imageUrl: D:/web/BIM/interface/upload/image/
+  pdfUrl: D:/web/BIM/interface/upload/pdf/
+
+---
+# 本地
+spring:
+  profiles: local
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.90.57:3306/sp?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+file:
+  upload: E:/shixi/idea/upload/
+  download: E:/shixi/2020-08-26/监测报表/
+  imageUrl: E:/shixi/image/
+  pdfUrl: E:/shixi/pdf/
+
+---
+# 排水
+spring:
+  profiles: bimm
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sp?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+file:
+  download: E:/BIM/监测报表/
+  upload: E:/BIM/upload/
+  imageUrl: E:/BIM/upload/image/
+  pdfUrl: E:/BIM/upload/pdf/
+
+---
+# 市政测试
+spring:
+  profiles: bimmtest
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+file:
+  download: E:/test/监测报表/
+  upload: E:/test/upload/
+  imageUrl: E:/test/upload/image/
+  pdfUrl: E:/test/upload/pdf/

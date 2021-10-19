@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.OmTagRelPostAccountDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.OmTagRelPostAccountEntity" id="omTagRelPostAccountMap">
+        <result property="fkId" column="fk_id"/>
+        <result property="projectid" column="projectId"/>
+        <result property="postId" column="post_id"/>
+        <result property="accountId" column="account_id"/>
+        <result property="createdate" column="createDate"/>
+        <result property="createuser" column="createUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="del" column="del"/>
+    </resultMap>
+    <!--获取fkid-->
+    <select id="getFkId" resultType="java.lang.String" parameterType="java.lang.String">
+        select * from OM_Tag_Rel_Post_Account where account_id=#{accountId} and post_id=#{postId} and projectId=#{projectId} and del=0
+    </select>
+</mapper>

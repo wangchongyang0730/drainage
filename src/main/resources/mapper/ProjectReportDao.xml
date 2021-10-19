@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectReportDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectReportEntity" id="projectReportMap">
+        <result property="sysid" column="sysId"/>
+        <result property="wbsid" column="wbsId"/>
+        <result property="plantime" column="plantime"/>
+        <result property="emittime" column="emittime"/>
+        <result property="reporttime" column="reporttime"/>
+        <result property="result" column="result"/>
+        <result property="remarks" column="remarks"/>
+        <result property="uploadfile" column="uploadfile"/>
+        <result property="uploadfile2" column="uploadfile2"/>
+        <result property="createdate" column="createDate"/>
+        <result property="createuser" column="createUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="del" column="del"/>
+        <result property="type" column="type"/>
+        <result property="projectid" column="projectId"/>
+        <result property="name" column="name"/>
+        <result property="reportperson" column="reportPerson"/>
+        <result property="securitygrade" column="securityGrade"/>
+        <result property="filing" column="filing"/>
+        <result property="schemetype" column="schemeType"/>
+        <result property="shbuploadfile" column="shbuploadfile"/>
+    </resultMap>
+    <!--获取报告列表-->
+    <select id="getAllReport" resultType="map" parameterType="com.sx.drainage.params.QueryParams">
+        select *  from (SELECT ROW_NUMBER() over(order by a.createDate) rowNum, c.relevanceSysId, d.ProcState,
+a.name, a.schemeType, a.securityGrade, a.sysId, a.wbsId, a.remarks, a.del, a.result, a.type, a.uploadfile,
+a.uploadfile2, a.projectId, createDate=convert(varchar(10),a.createDate,120), a.createUser, deleteDate=CONVERT(varchar(10),
+a.deleteDate,120), a.deleteUser, updateDate=CONVERT(varchar(10),a.updateDate,120), a.updateUser, a.reportPerson,
+_plantime=CONVERT(varchar(10),a.plantime,120), _emittime=convert(varchar(10),a.emittime,120), _reporttime=CONVERT(varchar(10),
+a.reporttime,120), b.partName as partName, a.filing FROM project_Report a   left join project_Wbs b on a.wbsId = b.sysId left join
+project_WorkFlow c on a.sysId = c.relevanceSysId left join sz_lc_WorkFlow d on d.SysId = c.FlowWorkId where a.del = 0  and
+a.projectId = #{id} and a.type=#{sort}) tb where rowNum between
+#{pageIndex} and #{pageSize}
+    </select>
+    <!--获取条数-->
+    <select id="getCount" resultType="map" parameterType="com.sx.drainage.params.QueryParams">
+        select *  from (SELECT ROW_NUMBER() over(order by a.createDate) rowNum, c.relevanceSysId, d.ProcState,
+a.name, a.schemeType, a.securityGrade, a.sysId, a.wbsId, a.remarks, a.del, a.result, a.type, a.uploadfile,
+a.uploadfile2, a.projectId, createDate=convert(varchar(10),a.createDate,120), a.createUser, deleteDate=CONVERT(varchar(10),
+a.deleteDate,120), a.deleteUser, updateDate=CONVERT(varchar(10),a.updateDate,120), a.updateUser, a.reportPerson,
+_plantime=CONVERT(varchar(10),a.plantime,120), _emittime=convert(varchar(10),a.emittime,120), _reporttime=CONVERT(varchar(10),
+a.reporttime,120), b.partName as partName, a.filing FROM project_Report a   left join project_Wbs b on a.wbsId = b.sysId left join
+project_WorkFlow c on a.sysId = c.relevanceSysId left join sz_lc_WorkFlow d on d.SysId = c.FlowWorkId where a.del = 0  and
+a.projectId = #{id} and a.type=#{sort}) tb
+    </select>
+</mapper>

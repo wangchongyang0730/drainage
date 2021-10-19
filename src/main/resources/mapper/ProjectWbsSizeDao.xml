@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sx.drainage.dao.ProjectWbsSizeDao">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectWbsSizeEntity" id="projectWbsSizeMap">
+        <result property="sysid" column="sysId"/>
+        <result property="wbsid" column="wbsId"/>
+        <result property="wbssize" column="wbsSize"/>
+        <result property="fileid" column="fileId"/>
+    </resultMap>
+</mapper>

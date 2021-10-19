@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectMonitorinitDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectMonitorinitEntity" id="projectMonitorinitMap">
+        <result property="sysid" column="sysId"/>
+        <result property="reportsysid" column="reportSysId"/>
+        <result property="pointname" column="pointName"/>
+        <result property="standardd" column="standardD"/>
+        <result property="standardz" column="standardZ"/>
+        <result property="actualposition" column="actualPosition"/>
+        <result property="relativeposition" column="relativePosition"/>
+        <result property="relativepoint" column="relativePoint"/>
+        <result property="createdate" column="createDate"/>
+        <result property="createuser" column="createUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="del" column="del"/>
+    </resultMap>
+<!--    &lt;!&ndash;获取初始化某项数值&ndash;&gt;-->
+<!--    <select id="getInitData" resultType="com.sx.sp.entity.ProjectMonitorinitEntity" parameterType="java.lang.String">-->
+<!--        select * from project_MonitorInit where reportSysId=#{reportSysId} and pointName=#{pointName} and del=0-->
+<!--    </select>-->
+</mapper>

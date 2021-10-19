@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.InspectionpriceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.InspectionpriceEntity" id="inspectionpriceMap">
+        <result property="sysid" column="sysId"/>
+        <result property="price" column="price"/>
+        <result property="remark" column="remark"/>
+        <result property="createtime" column="createTime"/>
+        <result property="createuser" column="createUser"/>
+        <result property="type" column="type"/>
+        <result property="projectid" column="projectId"/>
+        <result property="uploadfile" column="uploadfile"/>
+        <result property="reporttime" column="reportTime"/>
+    </resultMap>
+
+
+</mapper>

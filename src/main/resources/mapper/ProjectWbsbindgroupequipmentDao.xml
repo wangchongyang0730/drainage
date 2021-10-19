@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectWbsbindgroupequipmentDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectWbsbindgroupequipmentEntity" id="projectWbsbindgroupequipmentMap">
+        <result property="sysid" column="SysId"/>
+        <result property="entrydate" column="EntryDate"/>
+        <result property="departuredate" column="DepartureDate"/>
+        <result property="wbsid" column="WbsId"/>
+        <result property="equipmentname" column="EquipmentName"/>
+    </resultMap>
+
+
+</mapper>

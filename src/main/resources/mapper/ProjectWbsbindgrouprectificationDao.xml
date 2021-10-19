@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectWbsbindgrouprectificationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectWbsbindgrouprectificationEntity" id="projectWbsbindgrouprectificationMap">
+        <result property="sysid" column="SysId"/>
+        <result property="remarks" column="Remarks"/>
+        <result property="wbsid" column="WbsId"/>
+        <result property="type" column="Type"/>
+        <result property="before" column="Before"/>
+        <result property="after" column="After"/>
+        <result property="hiddentype" column="HiddenType"/>
+        <result property="rectificationdate" column="RectificationDate"/>
+        <result property="zhiliangoranquan" column="ZhiLiangOrAnQuan"/>
+    </resultMap>
+
+    <!--获取无流程提交质量和安全信息-->
+    <select id="getNoProcessRectification" resultType="map" parameterType="com.sx.drainage.params.QueryParams">
+        select * from project_WbsBindGroupRectification a left join project_Wbs b on a.WbsId=b.sysId where b.projectId=#{projectId} and a.ZhiLiangOrAnQuan=#{type}
+    </select>
+</mapper>

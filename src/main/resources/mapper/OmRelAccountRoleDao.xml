@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.OmRelAccountRoleDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.OmRelAccountRoleEntity" id="omRelAccountRoleMap">
+        <result property="accountId" column="account_id"/>
+        <result property="roleId" column="role_id"/>
+    </resultMap>
+
+    <select id="getAllRoleId" resultType="java.lang.String" parameterType="java.lang.String">
+        select role_id from OM_Rel_Account_Role where account_id=#{accountId}
+    </select>
+    <select id="getAllUserId" resultType="java.lang.String" parameterType="java.lang.String">
+        select account_id from OM_Rel_Account_Role where role_id=#{roleId}
+    </select>
+</mapper>

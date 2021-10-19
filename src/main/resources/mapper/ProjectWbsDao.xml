@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectWbsDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectWbsEntity" id="projectWbsMap">
+        <result property="sysid" column="sysId"/>
+        <result property="projectid" column="projectId"/>
+        <result property="parentid" column="parentId"/>
+        <result property="fullsysid" column="fullSysId"/>
+        <result property="partcode" column="partCode"/>
+        <result property="partcodebim" column="partCodeBim"/>
+        <result property="partname" column="partName"/>
+        <result property="parttype" column="partType"/>
+        <result property="iskey" column="isKey"/>
+        <result property="planbegindate" column="planBeginDate"/>
+        <result property="planenddate" column="planEndDate"/>
+        <result property="finishpercent" column="finishPercent"/>
+        <result property="finishstate" column="finishState"/>
+        <result property="factbegindate" column="factBeginDate"/>
+        <result property="factenddate" column="factEndDate"/>
+        <result property="auditedenddate" column="auditedEndDate"/>
+        <result property="orderval" column="orderVal"/>
+        <result property="isshow" column="isShow"/>
+        <result property="createuser" column="createUser"/>
+        <result property="createdate" column="createDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="del" column="del"/>
+        <result property="foreignkey" column="foreignKey"/>
+        <result property="mpppath" column="mppPath"/>
+        <result property="mppid" column="mppId"/>
+        <result property="mpplevel" column="mppLevel"/>
+        <result property="mppwbs" column="mppWbs"/>
+        <result property="mppfrontid" column="mppFrontId"/>
+        <result property="mppplanbegindate" column="mppPlanBeginDate"/>
+        <result property="mppplanenddate" column="mppPlanEndDate"/>
+        <result property="remark" column="remark"/>
+        <result property="bimtype" column="BimType"/>
+        <result property="ipcid" column="IpcId"/>
+        <result property="setbacksupload" column="setbacksupload"/>
+        <result property="completepercent" column="completePercent"/>
+        <result property="completequantity" column="completeQuantity"/>
+        <result property="unit" column="unit"/>
+        <result property="reportperson" column="reportPerson"/>
+        <result property="reportdate" column="reportDate"/>
+        <result property="mainunit" column="mainUnit"/>
+        <result property="binding" column="binding"/>
+        <result property="progressinfo" column="progressInfo"/>
+    </resultMap>
+    <!--获取项目当前作业面信息-->
+    <select id="getProjectNowSide" resultType="map" parameterType="java.lang.String">
+        select a.parentId,a.sysId, (select partName+'-' from project_Wbs  where sysId in(select sysId from  dbo.GetParentSysId('project_Wbs',a.sysId)   where level between 3 and 5) order by partCode asc For XML Path('')) as partName,CONVERT(VARCHAR(10),a.planBeginDate,21) as _planBeginDate , CONVERT(VARCHAR(10),a.planEndDate,21) as _planEndDate, CONVERT(VARCHAR(20),a.factEndDate,21)  as _factEndDate from project_Wbs a   where a.planBeginDate is not null and a.factEndDate is null and a.factBeginDate is not null and a.projectId=#{projectId} and  a.del=0 and (select count(0) from project_Wbs b where b.del=0 and parentId=a.sysId)=0 order by planBeginDate asc
+    </select>
+    <!--获取所有项目信息-->
+    <select id="getAllProjectDetails" resultType="map" parameterType="java.lang.String">
+        select b.sysId,p.proName,b.planBeginDate,b.planEndDate,b.factBeginDate,b.factEndDate from project_ProgressInfo p left join project_wbs b on b.sysId=p.wbsId where  p.projectId=#{projectId} and b.del=0
+    </select>
+    <!--获取详细信息-->
+    <!--
+    sql server
+    SELECT a.*,parentName=(select partName from project_Wbs where sysId=a.parentId), CONVERT(varchar(10), a.auditedEndDate, 120) _auditedEndDate,CONVERT(varchar(10), a.factBeginDate, 120) _factBeginDate, CONVERT(varchar(10), a.factEndDate, 120) _factEndDate, (select stuff((select ',' + mppFrontId from project_Wbs_MppFront b where  b.wbsId = a.sysId for xml path ('')),1,1,'') ) _MppFontId ,(select name from Monitor_IPC b where b.sysId = a.IpcId ) as IpcName,(select top 1 name from OM_Account where sysId = a.reportPerson ) as reportPersonName FROM project_Wbs a where a.sysId =#{sysId}
+    -->
+    <select id="getDetail" resultType="map" parameterType="java.lang.String">
+        select a.*,(select partName from project_Wbs where sysId=a.parentId) parentName, DATE_FORMAT(a.auditedEndDate,'%Y-%m-%d %H:%i:%s') _auditedEndDate,DATE_FORMAT(a.factBeginDate,'%Y-%m-%d %H:%i:%s') _factBeginDate,DATE_FORMAT(a.factEndDate,'%Y-%m-%d %H:%i:%s') _factEndDate, null _MppFontId,(select name from Monitor_IPC b where b.sysId = a.IpcId ) IpcName,(select name from OM_Account where sysId = a.reportPerson LIMIT 0,1 ) reportPersonName from project_Wbs a where a.sysId =#{sysId};
+    </select>
+</mapper>

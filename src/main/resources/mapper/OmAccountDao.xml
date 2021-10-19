@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.OmAccountDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.OmAccountEntity" id="omAccountMap">
+        <result property="sysid" column="sysId"/>
+        <result property="accountid" column="accountId"/>
+        <result property="empid" column="empId"/>
+        <result property="expire" column="expire"/>
+        <result property="humanId" column="human_id"/>
+        <result property="inact" column="inact"/>
+        <result property="lastchg" column="lastchg"/>
+        <result property="max" column="max"/>
+        <result property="min" column="min"/>
+        <result property="password" column="password"/>
+        <result property="removed" column="removed"/>
+        <result property="valid" column="valid"/>
+        <result property="warn" column="warn"/>
+        <result property="accounttype" column="accountType"/>
+        <result property="email" column="email"/>
+        <result property="msn" column="msn"/>
+        <result property="wechartcode" column="wechartCode"/>
+        <result property="address" column="address"/>
+        <result property="address2" column="address2"/>
+        <result property="postalcode" column="postalcode"/>
+        <result property="postalcode2" column="postalcode2"/>
+        <result property="worktelphone" column="workTelphone"/>
+        <result property="worktelphone2" column="workTelphone2"/>
+        <result property="mobile" column="mobile"/>
+        <result property="mobile2" column="mobile2"/>
+        <result property="faxphone" column="faxphone"/>
+        <result property="faxphone2" column="faxphone2"/>
+        <result property="pinyin" column="pinYin"/>
+        <result property="del" column="del"/>
+        <result property="logondate" column="logonDate"/>
+        <result property="logontimes" column="logonTimes"/>
+        <result property="enterpriseid" column="enterPriseId"/>
+        <result property="mobilevalid" column="mobileValid"/>
+        <result property="mobileconfirmcode" column="mobileConfirmCode"/>
+        <result property="synchroid" column="synchroId"/>
+        <result property="createddate" column="createdDate"/>
+        <result property="description" column="description"/>
+        <result property="name" column="name"/>
+        <result property="keyid" column="keyId"/>
+        <result property="sex" column="sex"/>
+        <result property="position" column="position"/>
+        <result property="duty" column="duty"/>
+        <result property="identitycard" column="identityCard"/>
+        <result property="edbackground" column="edBackground"/>
+        <result property="officeholder" column="officeHolder"/>
+        <result property="qualificationcert" column="qualificationCert"/>
+        <result property="postcert" column="postCert"/>
+        <result property="photo" column="photo"/>
+        <result property="file1" column="file1"/>
+        <result property="file2" column="file2"/>
+        <result property="file3" column="file3"/>
+        <result property="file4" column="file4"/>
+        <result property="filename1" column="fileName1"/>
+        <result property="filename2" column="fileName2"/>
+        <result property="filename3" column="fileName3"/>
+        <result property="filename4" column="fileName4"/>
+        <result property="file5" column="file5"/>
+        <result property="filename5" column="fileName5"/>
+        <result property="updatecontentdate" column="updateContentDate"/>
+        <result property="dynamicpassword" column="dynamicPassword"/>
+        <result property="dynamicpwddate" column="dynamicPwdDate"/>
+        <result property="sort" column="sort"/>
+        <result property="emailaccount" column="emailaccount"/>
+        <result property="taskcount" column="taskCount"/>
+        <result property="wechartuserid" column="wechartUserId"/>
+        <result property="fixedtelephone" column="fixedTelephone"/>
+        <result property="officeaddress" column="officeAddress"/>
+        <result property="officeroomno" column="officeRoomNo"/>
+        <result property="conenterprise" column="conEnterprise"/>
+        <result property="wechartmobile" column="wechartMobile"/>
+        <result property="wechartemail" column="wechartEmail"/>
+        <result property="recmsgtype" column="recMsgType"/>
+        <result property="accountstate" column="accountState"/>
+        <result property="openid" column="openid"/>
+        <result property="companyId" column="company_id"/>
+        <result property="unionid" column="unionid"/>
+    </resultMap>
+
+
+</mapper>

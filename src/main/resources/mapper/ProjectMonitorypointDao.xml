@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectMonitorypointDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectMonitorypointEntity" id="projectMonitorypointMap">
+        <result property="sysid" column="SysId"/>
+        <result property="cameraindexcode" column="CameraIndexCode"/>
+        <result property="cameraname" column="CameraName"/>
+        <result property="projectid" column="ProjectId"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.OmModuleDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.OmModuleEntity" id="omModuleMap">
+        <result property="sysid" column="sysId"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="fullname" column="fullName"/>
+        <result property="moduletype" column="moduleType"/>
+        <result property="createddate" column="createdDate"/>
+        <result property="description" column="description"/>
+        <result property="name" column="name"/>
+        <result property="sequencenum" column="sequenceNum"/>
+        <result property="url" column="url"/>
+        <result property="hide" column="hide"/>
+        <result property="iconcss" column="iconCss"/>
+    </resultMap>
+    <!--获取用户权限菜单详细信息-->
+    <select id="getPermissionList" resultType="com.sx.drainage.entity.OmModuleEntity" parameterType="java.lang.String">
+        select *,
+case when (select COUNT(1) cnt from OM_Module a where a.parent_id = modul.sysId) > 0 then 1 else 0 end isHaveChildNode
+from
+(
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName like '功能权限%'
+union
+select module.sysId,module.parent_id,module.name,module.fullName,module.url,module.sequenceNum,module.iconCss
+from OM_Role roles,OM_Module module,OM_Rel_Role_Module roles_module,OM_Rel_Account_Role account_roles
+where roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId
+and roles.sysId='402880152a491832012a6beac9af1f98'  and module.hide = 0 and  account_roles.account_id =#{userId}
+and module.fullName like '功能权限%'
+union
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName like '功能权限%'
+union
+  select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from  OM_Module module ,OM_Tag_Rel_Post_Role Post_role,OM_Tag_Rel_Post_Account Post_Account ,OM_Rel_Role_Module  Role_Module
+  where  Post_Account.post_id=Post_Role.post_id and Post_Role.role_id=Role_Module.role_id and Role_Module.module_id=module.sysId
+   and Post_Account.account_id=#{userId} and    module.fullName like '功能权限%'  and Post_role.del=0 and
+   Post_Account.del=0 and module.hide = 0
+)modul
+order by modul.sequenceNum
+    </select>
+
+    <!--获取当前用户菜单-->
+    <select id="getMenu" resultType="com.sx.drainage.entity.OmModuleEntity" parameterType="java.lang.String">
+        select *,
+case when (select COUNT(1) cnt from OM_Module a where a.parent_id = modul.sysId) > 0 then 1 else 0 end isHaveChildNode
+from
+(
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName not like '功能权限%'
+union
+select module.sysId,module.parent_id,module.name,module.fullName,module.url,module.sequenceNum,module.iconCss
+from OM_Role roles,OM_Module module,OM_Rel_Role_Module roles_module,OM_Rel_Account_Role account_roles
+where roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId
+and roles.sysId='402880152a491832012a6beac9af1f98'  and module.hide = 0 and  account_roles.account_id =#{userId}
+and module.fullName not like '功能权限%'
+union
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName not like '功能权限%'
+union
+  select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from  OM_Module module ,OM_Tag_Rel_Post_Role Post_role,OM_Tag_Rel_Post_Account Post_Account ,OM_Rel_Role_Module  Role_Module
+  where  Post_Account.post_id=Post_Role.post_id and Post_Role.role_id=Role_Module.role_id and Role_Module.module_id=module.sysId
+   and Post_Account.account_id=#{userId} and    module.fullName not like '功能权限%'  and Post_role.del=0 and
+   Post_Account.del=0 and module.hide = 0
+)modul
+order by modul.sequenceNum
+    </select>
+
+    <!--获取当前用户菜单（分项目权限）-->
+    <select id="getProjectMenu" resultType="com.sx.drainage.entity.OmModuleEntity" parameterType="java.lang.String">
+        select *,
+case when (select COUNT(1) cnt from OM_Module a where a.parent_id = modul.sysId) > 0 then 1 else 0 end isHaveChildNode
+from
+(
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName not like '功能权限%'
+union
+select module.sysId,module.parent_id,module.name,module.fullName,module.url,module.sequenceNum,module.iconCss
+from OM_Role roles,OM_Module module,OM_Rel_Role_Module roles_module,OM_Rel_Account_Role account_roles
+where roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId
+and roles.sysId='402880152a491832012a6beac9af1f98'  and module.hide = 0 and  account_roles.account_id =#{userId}
+and module.fullName not like '功能权限%'
+union
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName not like '功能权限%'
+union
+  select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from  OM_Module module ,OM_Tag_Rel_Post_Role Post_role,OM_Tag_Rel_Post_Account Post_Account ,OM_Rel_Role_Module  Role_Module
+  where  Post_Account.post_id=Post_Role.post_id and Post_Role.role_id=Role_Module.role_id and Role_Module.module_id=module.sysId
+   and Post_Account.account_id=#{userId} and    module.fullName not like '功能权限%'  and Post_role.del=0 and
+   Post_Account.del=0 and module.hide = 0 and Post_Account.projectId=#{projectId}
+)modul
+order by modul.sequenceNum
+    </select>
+
+    <!--获取用户权限菜单详细信息（分项目权限）-->
+    <select id="getProjectPermissionList" resultType="com.sx.drainage.entity.OmModuleEntity" parameterType="java.lang.String">
+        select *,
+case when (select COUNT(1) cnt from OM_Module a where a.parent_id = modul.sysId) > 0 then 1 else 0 end isHaveChildNode
+from
+(
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName like '功能权限%'
+union
+select module.sysId,module.parent_id,module.name,module.fullName,module.url,module.sequenceNum,module.iconCss
+from OM_Role roles,OM_Module module,OM_Rel_Role_Module roles_module,OM_Rel_Account_Role account_roles
+where roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId
+and roles.sysId='402880152a491832012a6beac9af1f98'  and module.hide = 0 and  account_roles.account_id =#{userId}
+and module.fullName like '功能权限%'
+union
+select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from OM_Account account, OM_Role roles, OM_Rel_Account_Role account_roles, OM_Module module,OM_Rel_Role_Module roles_module
+  where account.sysId=account_roles.account_id and account_roles.role_id=roles.sysId
+  and roles.sysId=roles_module.role_id and roles_module.module_id=module.sysId and module.hide = 0
+  and account.sysId=#{userId} and module.fullName like '功能权限%'
+union
+  select distinct module.sysId, module.parent_id, module.name, module.fullName, module.url, module.sequenceNum ,module.iconCss
+  from  OM_Module module ,OM_Tag_Rel_Post_Role Post_role,OM_Tag_Rel_Post_Account Post_Account ,OM_Rel_Role_Module  Role_Module
+  where  Post_Account.post_id=Post_Role.post_id and Post_Role.role_id=Role_Module.role_id and Role_Module.module_id=module.sysId
+   and Post_Account.account_id=#{userId} and    module.fullName like '功能权限%'  and Post_role.del=0 and
+   Post_Account.del=0 and module.hide = 0 and Post_Account.projectId=#{projectId}
+)modul
+order by modul.sequenceNum
+    </select>
+</mapper>

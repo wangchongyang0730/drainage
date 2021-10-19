@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectMonitordailyDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectMonitordailyEntity" id="projectMonitordailyMap">
+        <result property="sysid" column="sysId"/>
+        <result property="reportsysid" column="reportSysId"/>
+        <result property="code" column="code"/>
+        <result property="monitordate" column="monitorDate"/>
+        <result property="weater" column="weater"/>
+        <result property="remark" column="remark"/>
+        <result property="createdate" column="createDate"/>
+        <result property="createuser" column="createUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="del" column="del"/>
+    </resultMap>
+    <!--分页获取点位信息-->
+    <select id="getPagePointList" parameterType="com.sx.drainage.params.QueryParams" resultType="com.sx.drainage.params.dsParams">
+        select a.monitorDate,c.pointName,c.pointD,c.pointTotalD,c.currentValueD,c.pointZ,c.pointTotalZ,c.currentValueZ,c.remark from
+(select * from project_MonitorData order by ${sort} ${isasc} ) c inner join
+project_MonitorDaily a on a.sysId=c.dailySysId inner join
+project_MonitorReportSet b on a.reportSysId =b.sysId
+where a.del=0 and b.del=0 and c.del=0 and b.sysId=#{id} and a.monitorDate between #{startdate} and #{enddate}
+and a.sysId=(select sysId from project_MonitorDaily where del=0 and reportSysId=#{id} and monitorDate
+between #{startdate} and #{enddate}  order by monitorDate  desc limit 1) limit #{pageIndex},#{pageSize}
+    </select>
+    <!--总条数-->
+    <select id="getTotal" parameterType="com.sx.drainage.params.QueryParams" resultType="integer">
+        select count(0) total
+            from  project_MonitorDaily a
+                    inner join project_MonitorReportSet b  on a.reportSysId =b.sysId
+                    inner join project_MonitorData c  on a.sysId=c.dailySysId
+		            where a.del=0 and b.del=0 and c.del=0
+			                and b.sysId=#{id} and a.monitorDate between #{startdate} and #{enddate}
+			                and a.sysId=(select sysId from project_MonitorDaily where del=0 and reportSysId=#{id} and monitorDate
+                    between #{startdate} and #{enddate} order by monitorDate  desc limit 1)
+    </select>
+    <!--根据点位名称和时间查询点位数据列表-->
+    <select id="getDataList" resultType="map" parameterType="com.sx.drainage.params.QueryParams">
+        select CONVERT(a.monitorDate, CHAR(10)) monitorDate
+        ,c.pointName
+        ,c.pointD
+        ,c.pointTotalD
+        ,c.currentValueD
+        ,c.pointZ
+        ,c.pointTotalZ
+        ,c.currentValueZ
+        ,(select standardD from project_MonitorInit  where del=0 and pointName=c.pointName and reportSysId=b.sysId limit 1) standardD
+        ,(select standardZ from project_MonitorInit  where del=0 and pointName=c.pointName and reportSysId=b.sysId limit 1) standardZ
+        ,(select actualPosition from project_MonitorInit  where del=0 and pointName=c.pointName and reportSysId=b.sysId limit 1) actualPosition
+        ,(select relativePosition from project_MonitorInit  where del=0 and pointName=c.pointName and reportSysId=b.sysId limit 1) relativePosition
+        ,(select relativePoint from project_MonitorInit where del=0 and pointName=c.pointName and reportSysId=b.sysId limit 1) relativePoint
+            from project_MonitorDaily a
+            inner join project_MonitorReportSet b  on a.reportSysId =b.sysId
+            inner join project_MonitorData      c  on a.sysId=c.dailySysId
+            where a.del=0 and b.del=0 and c.del=0  and b.sysId=#{id}
+                <if test="sort!=null">
+                    and c.pointName=#{sort}
+                </if>
+                <if test="startdate!=null and enddate!=null">
+                    and a.monitorDate between #{startdate} and #{enddate}
+                </if>
+            order by a.createDate
+    </select>
+</mapper>

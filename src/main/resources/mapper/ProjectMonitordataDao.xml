@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectMonitordataDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectMonitordataEntity" id="projectMonitordataMap">
+        <result property="sysid" column="sysId"/>
+        <result property="dailysysid" column="dailySysId"/>
+        <result property="pointname" column="pointName"/>
+        <result property="pointd" column="pointD"/>
+        <result property="pointtotald" column="pointTotalD"/>
+        <result property="currentvalued" column="currentValueD"/>
+        <result property="pointz" column="pointZ"/>
+        <result property="pointtotalz" column="pointTotalZ"/>
+        <result property="currentvaluez" column="currentValueZ"/>
+        <result property="remark" column="remark"/>
+        <result property="createdate" column="createDate"/>
+        <result property="createuser" column="createUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="del" column="del"/>
+    </resultMap>
+
+    <select id="getAllSum" resultType="com.sx.drainage.entity.ProjectMonitordataEntity" parameterType="java.lang.String">
+        select pointName,sum(pointD) pointD,sum(pointZ) pointZ from project_MonitorData where dailySysId in
+        <foreach close=")" collection="dailySysId" item="sysId" open="(" separator=",">
+            #{sysId}
+        </foreach>
+    </select>
+    <!--单个-->
+    <select id="getOneSum" resultType="com.sx.drainage.entity.ProjectMonitordataEntity" parameterType="java.lang.String">
+        select pointName,sum(pointD) pointD,sum(pointZ) pointZ from project_MonitorData where dailySysId=#{dailySysId} group by pointName
+    </select>
+    <!--获取最近一次数据id-->
+    <select id="getLatelyDataId" resultType="java.lang.String" parameterType="java.lang.String">
+        select top 1 sysId from project_MonitorDaily where reportSysId=#{reportSysId} and sysId!=#{sysId} and del=0 order by monitorDate desc
+    </select>
+</mapper>

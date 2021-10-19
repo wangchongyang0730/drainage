@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectProjectDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectProjectEntity" id="projectProjectMap">
+        <result property="sysid" column="sysId"/>
+        <result property="parentid" column="parentId"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="shortname" column="shortName"/>
+        <result property="managerid" column="managerId"/>
+        <result property="telephone" column="telephone"/>
+        <result property="actualstartdate" column="actualStartDate"/>
+        <result property="planstartdate" column="planStartDate"/>
+        <result property="planenddate" column="planEndDate"/>
+        <result property="status" column="status"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="address" column="address"/>
+        <result property="weekday" column="weekDay"/>
+        <result property="monthday" column="monthDay"/>
+        <result property="del" column="del"/>
+        <result property="creatorid" column="creatorId"/>
+        <result property="createdate" column="createDate"/>
+        <result property="bimpicid" column="bimpicid"/>
+        <result property="constructionunit" column="constructionUnit"/>
+        <result property="supervisionunit" column="supervisionUnit"/>
+        <result property="designunit" column="designUnit"/>
+        <result property="bimpicid2" column="bimpicid2"/>
+        <result property="bimpicid3" column="bimpicid3"/>
+        <result property="approvestate" column="ApproveState"/>
+        <result property="pmscode" column="PMSCode"/>
+        <result property="pmssysid" column="PMSSysId"/>
+        <result property="issyncdate" column="IsSyncDate"/>
+        <result property="issyncdata" column="IsSyncData"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.DeviceOperationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.DeviceOperationEntity" id="deviceOperationMap">
+        <result property="sysid" column="sysId"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="parameter" column="parameter"/>
+        <result property="properties" column="properties"/>
+        <result property="manufacturer" column="Manufacturer"/>
+        <result property="count" column="count"/>
+        <result property="address" column="address"/>
+        <result property="appearancedate" column="AppearanceDate"/>
+        <result property="guaranteedate" column="GuaranteeDate"/>
+        <result property="maintenancemode" column="MaintenanceMode"/>
+        <result property="remark" column="remark"/>
+        <result property="fileid" column="fileId"/>
+        <result property="imgurl" column="imgUrl"/>
+        <result property="projectid" column="projectId"/>
+    </resultMap>
+
+
+</mapper>

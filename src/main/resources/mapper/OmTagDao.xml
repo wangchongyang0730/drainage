@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.OmTagDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.OmTagEntity" id="omTagMap">
+        <result property="sysid" column="sysId"/>
+        <result property="name" column="name"/>
+        <result property="remark" column="remark"/>
+        <result property="createdate" column="createDate"/>
+        <result property="createuser" column="createUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="del" column="del"/>
+        <result property="parentid" column="parentId"/>
+        <result property="tagtype" column="tagType"/>
+        <result property="useFlag" column="USE_FLAG"/>
+        <result property="sort" column="sort"/>
+    </resultMap>
+
+
+</mapper>

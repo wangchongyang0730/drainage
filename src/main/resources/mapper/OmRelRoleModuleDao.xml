@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.OmRelRoleModuleDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.OmRelRoleModuleEntity" id="omRelRoleModuleMap">
+        <result property="moduleId" column="module_id"/>
+        <result property="roleId" column="role_id"/>
+    </resultMap>
+    <!--获取所有角色关联的模块Id-->
+    <select id="getAllModuleId" resultType="java.lang.String" parameterType="java.lang.String">
+        select module_id from OM_Rel_Role_Module where role_id=#{roleId}
+    </select>
+</mapper>

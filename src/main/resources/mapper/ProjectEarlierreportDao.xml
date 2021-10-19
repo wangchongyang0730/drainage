@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.ProjectEarlierreportDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.ProjectEarlierreportEntity" id="earlierreportMap">
+        <result property="sysid" column="sysId"/>
+        <result property="projectid" column="projectId"/>
+        <result property="certificatename" column="certificateName"/>
+        <result property="code" column="code"/>
+        <result property="ratifydate" column="ratifyDate"/>
+        <result property="ratifydept" column="ratifyDept"/>
+        <result property="uploadfile" column="uploadfile"/>
+        <result property="createdate" column="createDate"/>
+        <result property="createuser" column="createUser"/>
+        <result property="updatedate" column="updateDate"/>
+        <result property="updateuser" column="updateUser"/>
+        <result property="deletedate" column="deleteDate"/>
+        <result property="deleteuser" column="deleteUser"/>
+        <result property="del" column="del"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+
+</mapper>

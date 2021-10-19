@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sx.drainage.dao.SourceriskDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sx.drainage.entity.SourceriskEntity" id="sourceriskMap">
+        <result property="sysid" column="sysId"/>
+        <result property="name" column="name"/>
+        <result property="wbsid" column="wbsId"/>
+        <result property="wbsname" column="wbsName"/>
+        <result property="createtime" column="createtime"/>
+        <result property="createuser" column="createuser"/>
+        <result property="updatetime" column="updatetime"/>
+        <result property="updateuser" column="updateuser"/>
+        <result property="isfolw" column="isFolw"/>
+        <result property="projectid" column="projectId"/>
+        <result property="planid" column="planId"/>
+        <result property="del" column="del"/>
+    </resultMap>
+
+
+</mapper>
